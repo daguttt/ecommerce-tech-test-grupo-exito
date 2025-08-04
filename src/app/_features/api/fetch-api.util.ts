@@ -22,8 +22,13 @@ function fetchWithErrors(
 	url: string,
 	requestInit?: RequestInit,
 ): ResultAsync<Response, NetworkError | HttpError> {
+	const baseRequestInit: RequestInit = {
+		signal: AbortSignal.timeout(5000),
+		...requestInit,
+	};
+
 	return ResultAsync.fromPromise(
-		fetch(url, requestInit),
+		fetch(url, baseRequestInit),
 		(error): NetworkError => ({
 			type: "NETWORK_ERROR",
 			message: "A network error occurred while fetching products",
