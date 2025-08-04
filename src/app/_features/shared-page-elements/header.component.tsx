@@ -2,14 +2,28 @@
 
 import type React from "react";
 
+import { useUnit } from "effector-react";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
+
+import {
+	SearchInput,
+	SearchInputWrapper,
+} from "~/app/_features/search/search.component";
+import {
+	$itemCount,
+	pageLoaded,
+} from "~/app/_features/shopping-cart/shopping-cart.store";
+
+import { useEffect } from "react";
 import { Button } from "~/components/ui/button";
-import { SearchInput, SearchInputWrapper } from "../search/search.component";
 
 export default function Header() {
-	// TODO: Replace with cart itemCount
-	const itemCount = 0;
+	const [itemCount, loadCart] = useUnit([$itemCount, pageLoaded]);
+
+	useEffect(() => {
+		loadCart();
+	}, [loadCart]);
 
 	return (
 		<header className="sticky top-0 z-50 bg-white shadow-md">

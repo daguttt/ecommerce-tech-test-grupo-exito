@@ -2,10 +2,12 @@
 
 import type React from "react";
 
+import { useUnit } from "effector-react";
 import { ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { cartItemAdded } from "~/app/_features/shopping-cart/shopping-cart.store";
 import type { ApiProduct } from "~/app/products/_feature/products.model";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter } from "~/components/ui/card";
@@ -15,6 +17,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+	const addCartItem = useUnit(cartItemAdded);
 	return (
 		<Card className="group transition-shadow duration-300 hover:shadow-lg">
 			<Link href={`/products/${product.id}`}>
@@ -48,7 +51,11 @@ export function ProductCard({ product }: ProductCardProps) {
 			</Link>
 
 			<CardFooter className="p-4 pt-0">
-				<Button className="w-full" size="sm">
+				<Button
+					className="w-full"
+					size="sm"
+					onClick={() => addCartItem(product)}
+				>
 					<ShoppingCart className="mr-2 h-4 w-4" />
 					Agregar al carrito
 				</Button>
