@@ -22,6 +22,7 @@ export const env = createEnv({
 	 */
 	client: {
 		NEXT_PUBLIC_API_URL: type("string.url"),
+		NEXT_PUBLIC_ENVIRONMENT: type("'development' | 'test' | 'production'"),
 	},
 	// client: {
 	// 	NEXT_PUBLIC_API_URL: z.string().url(),
@@ -34,6 +35,7 @@ export const env = createEnv({
 	runtimeEnv: {
 		NODE_ENV: process.env.NODE_ENV,
 		NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+		NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
 	},
 	/**
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
@@ -45,8 +47,4 @@ export const env = createEnv({
 	 * `SOME_VAR=''` will throw an error.
 	 */
 	emptyStringAsUndefined: true,
-	onValidationError: (issues: readonly StandardSchemaV1.Issue[]) => {
-		console.error("❌ Invalid environment variables:", issues);
-		throw new Error("Invalid environment variables");
-	},
 });
