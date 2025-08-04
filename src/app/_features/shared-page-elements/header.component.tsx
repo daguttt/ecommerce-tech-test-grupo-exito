@@ -5,7 +5,7 @@ import type React from "react";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import { SearchInput } from "../search/search.component";
+import { SearchInput, SearchInputWrapper } from "../search/search.component";
 
 export default function Header() {
 	// TODO: Replace with cart itemCount
@@ -19,7 +19,9 @@ export default function Header() {
 						Tienda Éxito
 					</Link>
 
-					<SearchInput className="w-80 min-w-20 md:w-80" />
+					<SearchInputWrapper>
+						<SearchInput className="w-80 min-w-20 md:w-80" />
+					</SearchInputWrapper>
 
 					<div className="flex items-center space-x-4">
 						<Link href="/cart">

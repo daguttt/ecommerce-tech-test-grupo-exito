@@ -1,11 +1,19 @@
 "use client";
 
 import { Search } from "lucide-react";
+import { type ReactElement, Suspense } from "react";
+
 import { Input } from "~/components/ui/input";
+import { Skeleton } from "~/components/ui/skeleton";
 import { cn } from "~/lib/cn.util";
 import { useSearchParamFromNext } from "./use-search-param-from-next.hook";
 
-export function SearchInput({
+// **************************************************
+// Public API
+export { SearchInput, SearchInputWrapper };
+// **************************************************
+
+function SearchInput({
 	className,
 	id = "search",
 }: { className?: string; id?: string }) {
@@ -27,4 +35,14 @@ export function SearchInput({
 			/>
 		</div>
 	);
+}
+
+function SearchInputSkeleton() {
+	return <Skeleton className="h-10 w-80 min-w-20" />;
+}
+
+function SearchInputWrapper({
+	children,
+}: { children: ReactElement<typeof SearchInput> }) {
+	return <Suspense fallback={<SearchInputSkeleton />}>{children}</Suspense>;
 }

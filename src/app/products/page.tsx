@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { env } from "~/env";
 
-import { SearchInput } from "~/app/_features/search/search.component";
+import {
+	SearchInput,
+	SearchInputWrapper,
+} from "~/app/_features/search/search.component";
 
 import {
 	CategoriesSelect,
@@ -69,7 +72,9 @@ export default async function ProductsPage({
 				<h1 className="mb-6 font-bold text-3xl">Nuestros Productos</h1>
 
 				<div className="mb-6 flex flex-col gap-4 md:flex-row">
-					<SearchInput id="main-search" className="flex-1" />
+					<SearchInputWrapper>
+						<SearchInput id="main-search" className="flex-1" />
+					</SearchInputWrapper>
 					{categoriesResult.isOk() && (
 						<CategoriesSelect categories={categoriesResult.value} />
 					)}
