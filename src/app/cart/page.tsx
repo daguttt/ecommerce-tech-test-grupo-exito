@@ -1,4 +1,4 @@
-import { CartPageContent } from "./_feature/cart-page-content.component";
+import { CartPageContent } from "./_feature";
 
 export default function CartPage() {
 	return (

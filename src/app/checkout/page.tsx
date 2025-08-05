@@ -1,5 +1,4 @@
-import { CheckoutForm } from "./_feature/checkout-form.component";
-import { CheckoutSummary } from "./_feature/checkout-summary.component";
+import { CheckoutForm, CheckoutSummary } from "./_feature";
 
 export default function CheckoutPage() {
 	return (

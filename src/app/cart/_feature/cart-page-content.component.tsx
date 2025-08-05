@@ -5,13 +5,15 @@ import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import {
 	$cart,
 	cartItemQuantityChanged,
 	cartItemRemoved,
-} from "../../_features/shopping-cart/shopping-cart.store";
+} from "~/app/_features/shopping-cart/shopping-cart.store";
+
+import { Button } from "~/components/ui/button";
+import { Card, CardContent } from "~/components/ui/card";
+
 import { CartSummary } from "./cart-summary.component";
 
 // **************************************************
