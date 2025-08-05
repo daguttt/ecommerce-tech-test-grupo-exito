@@ -32,6 +32,10 @@ const saveCartFx = createEffect((cart: CartItem[]) => {
 	localStorage.setItem("cart-items", JSON.stringify(cart));
 });
 
+const clearCartFx = createEffect(() => {
+	localStorage.removeItem("cart-items");
+});
+
 export const $cart = createStore<CartState>({
 	items: [],
 })
@@ -84,9 +88,7 @@ export const $cart = createStore<CartState>({
 		}
 		throw new Error(`Cart item with id ${id} not found`);
 	})
-	.on(cartCleared, () => ({
-		items: [],
-	}));
+	.reset(cartCleared);
 
 export const $itemCount = $cart.map((state) =>
 	state.items.reduce((total, item) => total + item.quantity, 0),
@@ -106,4 +108,9 @@ sample({
 sample({
 	source: pageLoaded,
 	target: getCartFx,
+});
+
+sample({
+	source: cartCleared,
+	target: clearCartFx,
 });
