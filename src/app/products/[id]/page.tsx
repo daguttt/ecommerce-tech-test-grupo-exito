@@ -1,4 +1,4 @@
-import { ArrowLeft, ShoppingCart } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -7,16 +7,20 @@ import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 
 import { fetchProductById } from "../_feature/products.service";
-import { QuantitySelect } from "./_feature/quantity-select.component";
+import { AddToCartButton } from "./_feature/add-to-cart-button.component";
+import {
+	QuantitySelect,
+	QuantitySelectWrapper,
+} from "./_feature/quantity-select.component";
 import { Stars } from "./stars.component";
 
 export default async function ProductDetailPage({
 	params,
+	searchParams,
 }: {
 	params: Promise<{ id: string }>;
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-	// TODO: use notFound() functions after converting page to server component
-
 	const paramsObj = await params;
 	const productId = paramsObj.id;
 
@@ -46,6 +50,12 @@ export default async function ProductDetailPage({
 	}
 
 	const product = productResult.value;
+
+	const searchParamObj = await searchParams;
+	const queryQuantity = Array.isArray(searchParamObj.quantity)
+		? searchParamObj.quantity[0]
+		: searchParamObj.quantity;
+	const quantity = queryQuantity ? Number(queryQuantity) : 1;
 
 	return (
 		<div className="container mx-auto px-4 py-8">
@@ -95,12 +105,11 @@ export default async function ProductDetailPage({
 						</p>
 					</div>
 
-					<QuantitySelect />
+					<QuantitySelectWrapper>
+						<QuantitySelect />
+					</QuantitySelectWrapper>
 
-					<Button size="lg" className="w-full">
-						<ShoppingCart className="mr-2 h-5 w-5" />
-						Agregar al carrito
-					</Button>
+					<AddToCartButton quantity={quantity} product={product} />
 				</div>
 			</div>
 		</div>

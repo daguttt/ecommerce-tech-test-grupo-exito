@@ -10,7 +10,7 @@ interface CartState {
 }
 
 export const pageLoaded = createEvent();
-export const cartItemAdded = createEvent<ApiProduct>();
+export const cartItemAdded = createEvent<CartItem>();
 export const cartItemRemoved = createEvent<number>();
 export const cartItemQuantityChanged = createEvent<{
 	id: number;
@@ -29,7 +29,6 @@ const getCartFx = createEffect(() => {
 });
 
 const saveCartFx = createEffect((cart: CartItem[]) => {
-	console.log("saveCartFx");
 	localStorage.setItem("cart-items", JSON.stringify(cart));
 });
 
@@ -39,19 +38,30 @@ export const $cart = createStore<CartState>({
 	.on(getCartFx.doneData, (_initialState, { items }) => {
 		return { items };
 	})
-	.on(cartItemAdded, (state, product) => {
-		const foundItem = state.items.find((item) => item.id === product.id);
-		if (foundItem) {
+	.on(cartItemAdded, (state, cartItemToAdd) => {
+		const foundItem = state.items.find((item) => item.id === cartItemToAdd.id);
+
+		// Updating existing item
+		if (foundItem)
 			return {
-				items: state.items.map((item) =>
-					item.id === product.id
-						? { ...item, quantity: item.quantity + 1 }
-						: item,
-				),
+				items: state.items.map((item) => {
+					const newQuantity = item.quantity + (cartItemToAdd.quantity || 1);
+
+					return item.id === cartItemToAdd.id
+						? {
+								...item,
+								quantity: newQuantity,
+							}
+						: item;
+				}),
 			};
-		}
+
+		// Adding new item
 		return {
-			items: [...state.items, { ...product, quantity: 1 }],
+			items: [
+				...state.items,
+				{ ...cartItemToAdd, quantity: cartItemToAdd.quantity || 1 },
+			],
 		};
 	})
 	.on(cartItemRemoved, (state, id) => {

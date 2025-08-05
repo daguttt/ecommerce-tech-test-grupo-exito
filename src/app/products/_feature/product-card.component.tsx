@@ -54,7 +54,7 @@ export function ProductCard({ product }: ProductCardProps) {
 				<Button
 					className="w-full"
 					size="sm"
-					onClick={() => addCartItem(product)}
+					onClick={() => addCartItem({ ...product, quantity: 1 })}
 				>
 					<ShoppingCart className="mr-2 h-4 w-4" />
 					Agregar al carrito
