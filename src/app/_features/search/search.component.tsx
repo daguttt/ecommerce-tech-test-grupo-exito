@@ -21,6 +21,7 @@ function SearchInput({
 		useSearchParamFromNext({
 			key: "search",
 			defaultValue: "",
+			debounced: true
 		});
 	return (
 		<div className={cn("relative", className)}>
