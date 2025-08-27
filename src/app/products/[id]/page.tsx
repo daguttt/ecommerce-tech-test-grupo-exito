@@ -13,6 +13,7 @@ import {
 	QuantitySelectWrapper,
 } from "./_feature/quantity-select.component";
 import { Stars } from "./stars.component";
+import { toUrlSearchParams } from "~/lib/to-url-search-params.util";
 
 export default async function ProductDetailPage({
 	params,
@@ -51,10 +52,8 @@ export default async function ProductDetailPage({
 
 	const product = productResult.value;
 
-	const searchParamObj = await searchParams;
-	const queryQuantity = Array.isArray(searchParamObj.quantity)
-		? searchParamObj.quantity[0]
-		: searchParamObj.quantity;
+	const searchParamObj = toUrlSearchParams(await searchParams);
+	const queryQuantity = searchParamObj.get("quantity");
 	const quantity = queryQuantity ? Number(queryQuantity) : 1;
 
 	return (

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { env } from "~/env";
 
+import { toUrlSearchParams } from "~/lib/to-url-search-params.util";
 import {
 	SearchInput,
 	SearchInputWrapper,
@@ -34,15 +35,15 @@ export default async function ProductsPage({
 		);
 	}
 
-	const searchQuery = (await searchParams).search;
-	const selectedCategory = (await searchParams).category ?? "all";
-	const invalidSearch = searchQuery && Array.isArray(searchQuery);
+	const searchParamsObj = toUrlSearchParams(await searchParams);
+	const searchQuery = searchParamsObj.get("search");
+	const selectedCategory = searchParamsObj.get("category") ?? "all";
 
 	const products = productsResult.value;
 	const filteredProducts = (() => {
 		let filtered = products;
 
-		if (searchQuery && !invalidSearch) {
+		if (searchQuery) {
 			filtered = filtered.filter(
 				(product) =>
 					product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
