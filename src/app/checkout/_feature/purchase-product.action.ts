@@ -38,3 +38,13 @@ export async function purchaseProducts(
 
 	redirect("/checkout/success");
 }
+
+type GetFormState<TData extends Record<string, unknown>> = {
+	data: TData;
+	errors: {
+		[key in keyof TData]: string[] | undefined;
+	};
+	success: boolean;
+};
+
+type TestCheckoutFormState = GetFormState<CheckoutForm>;
