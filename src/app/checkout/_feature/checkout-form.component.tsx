@@ -41,7 +41,7 @@ const initialCheckoutFormState = {
 export function CheckoutForm() {
 	const total = useUnit($total);
 
-	const [state, formAction, pending] = useActionState(
+	const [formState, formAction, pending] = useActionState(
 		purchaseProducts,
 		initialCheckoutFormState,
 	);
@@ -59,11 +59,11 @@ export function CheckoutForm() {
 							id="name"
 							name="name"
 							required
-							defaultValue={state.data.name}
+							defaultValue={formState.data.name}
 						/>
-						{state.errors.name && state.errors.name.length > 0 && (
+						{formState.errors.name && formState.errors.name.length > 0 && (
 							<p className="text-red-500 text-xs">
-								{state.errors.name.join(", ")}
+								{formState.errors.name.join(", ")}
 							</p>
 						)}{" "}
 					</div>
@@ -74,12 +74,12 @@ export function CheckoutForm() {
 							name="email"
 							type="email"
 							required
-							aria-invalid={(state.errors.email?.length ?? 0) > 0}
-							defaultValue={state.data.email}
+							aria-invalid={(formState.errors.email?.length ?? 0) > 0}
+							defaultValue={formState.data.email}
 						/>
-						{state.errors.email && state.errors.email.length > 0 && (
+						{formState.errors.email && formState.errors.email.length > 0 && (
 							<p className="text-red-500 text-xs">
-								{state.errors.email.join(", ")}
+								{formState.errors.email.join(", ")}
 							</p>
 						)}
 					</div>
@@ -97,14 +97,15 @@ export function CheckoutForm() {
 							id="address"
 							name="address"
 							required
-							aria-invalid={(state.errors.address?.length ?? 0) > 0}
-							defaultValue={state.data.address}
+							aria-invalid={(formState.errors.address?.length ?? 0) > 0}
+							defaultValue={formState.data.address}
 						/>
-						{state.errors.address && state.errors.address.length > 0 && (
-							<p className="text-red-500 text-xs">
-								{state.errors.address.join(", ")}
-							</p>
-						)}
+						{formState.errors.address &&
+							formState.errors.address.length > 0 && (
+								<p className="text-red-500 text-xs">
+									{formState.errors.address.join(", ")}
+								</p>
+							)}
 					</div>
 					<div className="grid grid-cols-2 gap-4">
 						<div className="flex flex-col gap-2">
@@ -113,12 +114,12 @@ export function CheckoutForm() {
 								id="city"
 								name="city"
 								required
-								aria-invalid={(state.errors.city?.length ?? 0) > 0}
-								defaultValue={state.data.city}
+								aria-invalid={(formState.errors.city?.length ?? 0) > 0}
+								defaultValue={formState.data.city}
 							/>
-							{state.errors.city && state.errors.city.length > 0 && (
+							{formState.errors.city && formState.errors.city.length > 0 && (
 								<p className="text-red-500 text-xs">
-									{state.errors.city.join(", ")}
+									{formState.errors.city.join(", ")}
 								</p>
 							)}
 						</div>
@@ -128,14 +129,15 @@ export function CheckoutForm() {
 								id="zipCode"
 								name="zipCode"
 								required
-								aria-invalid={(state.errors.zipCode?.length ?? 0) > 0}
-								defaultValue={state.data.zipCode}
+								aria-invalid={(formState.errors.zipCode?.length ?? 0) > 0}
+								defaultValue={formState.data.zipCode}
 							/>
-							{state.errors.zipCode && state.errors.zipCode.length > 0 && (
-								<p className="text-red-500 text-xs">
-									{state.errors.zipCode.join(", ")}
-								</p>
-							)}
+							{formState.errors.zipCode &&
+								formState.errors.zipCode.length > 0 && (
+									<p className="text-red-500 text-xs">
+										{formState.errors.zipCode.join(", ")}
+									</p>
+								)}
 						</div>
 					</div>
 				</CardContent>
@@ -153,14 +155,15 @@ export function CheckoutForm() {
 							name="cardNumber"
 							placeholder="1234 5678 9012 3456"
 							required
-							aria-invalid={(state.errors.cardNumber?.length ?? 0) > 0}
-							defaultValue={state.data.cardNumber}
+							aria-invalid={(formState.errors.cardNumber?.length ?? 0) > 0}
+							defaultValue={formState.data.cardNumber}
 						/>
-						{state.errors.cardNumber && state.errors.cardNumber.length > 0 && (
-							<p className="text-red-500 text-xs">
-								{state.errors.cardNumber.join(", ")}
-							</p>
-						)}
+						{formState.errors.cardNumber &&
+							formState.errors.cardNumber.length > 0 && (
+								<p className="text-red-500 text-xs">
+									{formState.errors.cardNumber.join(", ")}
+								</p>
+							)}
 					</div>
 					<div className="grid grid-cols-2 gap-4">
 						<div className="flex flex-col gap-2">
@@ -170,13 +173,13 @@ export function CheckoutForm() {
 								name="expiryDate"
 								placeholder="MM/YY"
 								required
-								aria-invalid={(state.errors.expiryDate?.length ?? 0) > 0}
-								defaultValue={state.data.expiryDate}
+								aria-invalid={(formState.errors.expiryDate?.length ?? 0) > 0}
+								defaultValue={formState.data.expiryDate}
 							/>
-							{state.errors.expiryDate &&
-								state.errors.expiryDate.length > 0 && (
+							{formState.errors.expiryDate &&
+								formState.errors.expiryDate.length > 0 && (
 									<p className="text-red-500 text-xs">
-										{state.errors.expiryDate.join(", ")}
+										{formState.errors.expiryDate.join(", ")}
 									</p>
 								)}
 						</div>
@@ -187,12 +190,12 @@ export function CheckoutForm() {
 								name="cvv"
 								placeholder="123"
 								required
-								aria-invalid={(state.errors.cvv?.length ?? 0) > 0}
-								defaultValue={state.data.cvv}
+								aria-invalid={(formState.errors.cvv?.length ?? 0) > 0}
+								defaultValue={formState.data.cvv}
 							/>
-							{state.errors.cvv && state.errors.cvv.length > 0 && (
+							{formState.errors.cvv && formState.errors.cvv.length > 0 && (
 								<p className="text-red-500 text-xs">
-									{state.errors.cvv.join(", ")}
+									{formState.errors.cvv.join(", ")}
 								</p>
 							)}
 						</div>
